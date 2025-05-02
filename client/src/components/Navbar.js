@@ -1,18 +1,31 @@
 function Navbar(){
     return (
-        <nav className="w-full bg-black text-white px-6 py-4 flex justify-between items-center shadow-md border-b border-gray-800">
-            {/* Logo */}
-            <div className="text-2xl font-bold">
-                Wash<span className="text-blueViolet">&</span>WaxWorks
-            </div>
-            {/* Links */}
-            <div className="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" className="hover:text-blueViolet transition">Home</a>
-                <a href="#" className="hover:text-blueViolet transition">Services</a>
-                <a href="#" className="hover:text-blueViolet transition">Book</a>
-                <a href="#" className="hover:text-blueViolet transition">Contact</a>
-            </div>
-        </nav>
+        <header className="sticky top-0 z-50 shadow-md">
+            <nav className="bg-[#0f0f0f] text-white px-6 py-4 flex justify-between items-center">
+                {/* Logo */}
+                <div className="text-2xl font-bold tracking-tight">
+                    <span className="text-blue-400">Wash</span>&<span className="text-violet-500">WaxWorks</span>
+                </div>
+                {/* Links */}
+                <div className="hidden md:flex space-x-6 text-sm font-medium">
+                    {['Home', 'Services', 'Book', 'Contact'].map((item) => (
+                      <a
+                        key={item}
+                        href="#"
+                        className="relative group"
+                        >
+                            <span className="transition-colors duration-200 group-hover:text-blue-400">
+                                {item}
+                            </span>
+                            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                        </a>   
+                    ))}
+                </div>            
+            </nav>
+             {/* Gradient Stripe */}
+             <div className="h-1 bg-gradient-to-r from-blue-400 via-violet-500 to-purple-600" />
+        </header>
+
     );
 }
 
