@@ -2,6 +2,7 @@ import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Services from "./components/Services";
 import Testiomonials from "./components/Testimonials";
+import Footer from "./components/Footer";
 
 import AOS from "aos";
 import 'aos/dist/aos.css';
@@ -21,6 +22,7 @@ export default function App() {
       <Hero />
       <Services />
       <Testiomonials />
+      <Footer />
     </div>
   );
 }
