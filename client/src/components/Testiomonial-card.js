@@ -1,6 +1,9 @@
-function TestimonialCard({name, quote, image}){
+function TestimonialCard({name, quote, image, animate, delay=0}){
     return (
-        <div className="bg-gray-900 text-white rounded-xl p-6 shadow-md border border-gray-800 hover:shadow-lg transition">
+        <div
+            data-aos={animate}
+            data-aos-delay={delay}
+            className="bg-gray-900 text-white rounded-xl p-6 shadow-md border border-gray-800 hover:shadow-lg transition">
             <div className="flex items-center mb-4">
                 <img
                     src={image}

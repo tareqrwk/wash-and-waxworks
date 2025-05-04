@@ -3,6 +3,7 @@ import {useRef, useState} from "react";
 function ServicesCard({title, description, image}){
     return(
         <div
+            data-aos="zoom-in"
             className="relative h-[400px] w-full rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:scale-[1.03] transition-transform duration-300"
             style={{
                 backgroundImage: `url("${image}")`,
