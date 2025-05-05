@@ -39,7 +39,12 @@ function BookingPage(){
                     ✅ Appointment successfully booked!
                 </div>
             )}
-            <form onSubmit={handleSubmit} className="space-y-6 bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-800">
+            <form 
+            onSubmit={handleSubmit}
+            data-aos = "fade-up"
+            data-aos-duration="800"
+            className="space-y-6 bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-800"
+            >
                 <input 
                     type="text"
                     placeholder="Your Name"
