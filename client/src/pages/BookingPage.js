@@ -11,12 +11,35 @@ function BookingPage(){
         time: '',
         notes: ''
     });
+    const [submitted, setSubmitted] = useState(false);
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        console.log("Submitted Book:", formData);
+        setSubmitted(true);
+        setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            car: '',
+            service: '',
+            date: '',
+            time: '',
+            notes: ''
+        });
+        setTimeout(() => setSubmitted(false), 4000);
+        // TODO: send to backend
+    }
 
     return(
         <section className="bg-black min-h-screen text-white py-16 px-4">
             <div className="min-h-screen bg-black text-white py-16 px-4">
             <h1 className="text-4xl font-bold text-center mb-8">Book a Detailing Appointment</h1>
-            <form className="space-y-6 bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-800">
+            {submitted && (
+                <div className="text-green-400 text-center mb-6 font-medium animate-pulse">
+                    ✅ Appointment successfully booked!
+                </div>
+            )}
+            <form onSubmit={handleSubmit} className="space-y-6 bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-800">
                 <input 
                     type="text"
                     placeholder="Your Name"
@@ -77,7 +100,17 @@ function BookingPage(){
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value})}
                 />
-            </form>   
+
+                <div className="flex justify-center mt-6">
+                    <button
+                        type="submit"
+                        className="bg-gray-600 font-semibold text-white px-6 py-2 rounded-xl hover:bg-purple-900 transition"
+                    >
+                        Book Appointment
+                    </button>
+                </div>
+            </form>
+
             </div>
         </section>
 
