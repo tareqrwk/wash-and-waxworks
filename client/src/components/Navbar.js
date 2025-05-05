@@ -11,7 +11,7 @@ function Navbar(){
                 <div className="hidden md:flex space-x-6 text-sm font-medium">
                     {[
                         {label: 'Home', path: '/'},
-                        {label: 'Services', path: '/'},
+                        {label: 'Services', path: '/services'},
                         {label: 'Book', path: '/book'},
                         {label: 'Contact', path: '/'}
                     ].map(({label, path}) => (
