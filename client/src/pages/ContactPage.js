@@ -9,6 +9,11 @@ function ContactPage(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!form.name || !form.email || !form.message){
+            alert("Please fill out all fields before submitting.");
+            return;
+        }
+
         try{
             const res = await fetch('http://localhost:5000/api/contact', {
                 method: 'POST',
