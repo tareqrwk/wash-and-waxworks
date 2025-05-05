@@ -14,6 +14,23 @@ function BookingPage(){
     const [submitted, setSubmitted] = useState(false);
     const handleSubmit = (e) =>{
         e.preventDefault();
+        // Required Field Check
+        if (!formData.name || !formData.phone || !formData.service || !formData.date || !formData.time){
+            alert("Please fill out all required fields.")
+            return;
+        }
+        // Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)){
+            alert("Please enter a valid email address");
+            return;
+        }
+        // Phone number validation
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(formData.phone.replace(/\D/g, ""))) {
+            alert("Please enter a valid 10-digit phone number.");
+            return;
+        }
         console.log("Submitted Book:", formData);
         setSubmitted(true);
         setFormData({
