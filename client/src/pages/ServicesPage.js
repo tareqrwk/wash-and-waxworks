@@ -6,7 +6,10 @@ function ServicesPage(){
             <h1 className="text-4xl font-bold text-center mb-12"> Full Detail Services (In & Out)</h1>
             {/*Full Detail Services*/}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
-                <ServicesPageCard 
+                <ServicesPageCard
+                    data-aos="fade-up"
+                    data-aos-delays="100"
+                    data-aos-duration="2000" 
                     title="Standard"
                     description={`Exterior Detail\n
                                  Vacuum Interior\n
@@ -19,7 +22,10 @@ function ServicesPage(){
                                  Upholstery Cleaning`}
                     price="$99.99"
                 />
-                <ServicesPageCard 
+                <ServicesPageCard
+                    data-aos="fade-down"
+                    data-aos-delays="100"
+                    data-aos-duration="2000" 
                     title="Shiny"
                     description={`Exterior Detail\n
                                  Vacuum Interior\n
@@ -35,7 +41,10 @@ function ServicesPage(){
                                  Upholstery Cleaning`}
                     price="$149.99"
                 />
-                <ServicesPageCard 
+                <ServicesPageCard
+                    data-aos="fade-up"
+                    data-aos-delays="100"
+                    data-aos-duration="2000"  
                     title="Platinum"
                     description={`Exterior Detail (Exclusive Car Shampoo)\n
                                  Vacuum Interior\n
@@ -57,7 +66,10 @@ function ServicesPage(){
             </div>
             <h1 className="text-4xl font-bold text-center mb-12 mt-12"> Interior Detail Services</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
-                <ServicesPageCard 
+                <ServicesPageCard
+                    data-aos="fade-up"
+                    data-aos-delays="100"
+                    data-aos-duration="2000"   
                     title="Full Interior"
                     description={`Exterior Detail (Exclusive Car Shampoo)\n
                                  Vacuum Interior\n
@@ -76,7 +88,10 @@ function ServicesPage(){
                                  Upholstery Cleaning`}
                     price="$174.99"
                 />
-                <ServicesPageCard 
+                <ServicesPageCard
+                    data-aos="fade-down"
+                    data-aos-delays="100"
+                    data-aos-duration="2000"   
                     title="Standard Interior"
                     description={`Vacuum Interior\n
                                 Clean Interior Windows\n
@@ -86,7 +101,10 @@ function ServicesPage(){
                                 Upholstery Cleaning`}
                     price="$74.99"
                 />
-                <ServicesPageCard 
+                <ServicesPageCard
+                    data-aos="fade-up"
+                    data-aos-delays="100"
+                    data-aos-duration="2000"   
                     title="Quick Wash"
                     description={`Hand Wash\n
                                 Tire Cleaning\n\n
