@@ -6,11 +6,24 @@ function ContactPage(){
         setForm({ ...form, [e.target.name]: e.target.value});
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Message sent:", form);
-        alert("Message sent! Thank you for contacting us.");
-        setForm({ name: "", email: "", message: ""});
+
+        try{
+            const res = await fetch('http://localhost:5000/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            });
+
+            const data = await res.json();
+            alert(data.message);
+            setForm({ name: '', email: '', message: ''});
+        }
+        catch (error){
+            console.error('Error sending email:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
 
     return (
@@ -43,7 +56,7 @@ function ContactPage(){
                         name="email"
                         placeholder="Your Email"
                         className="w-full p-3 rounded-md bg-gray-800 text-white focus:outline-none"
-                        value={form.name}
+                        value={form.email}
                         onChange={handleChange}
                     />
                     <textarea
