@@ -13,7 +13,7 @@ function Navbar(){
                         {label: 'Home', path: '/'},
                         {label: 'Services', path: '/services'},
                         {label: 'Book', path: '/book'},
-                        {label: 'Contact', path: '/'}
+                        {label: 'Contact', path: '/contact'}
                     ].map(({label, path}) => (
                       <Link
                         key={label}

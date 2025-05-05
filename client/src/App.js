@@ -6,6 +6,7 @@ import Testiomonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import BookingPage from "./pages/BookingPage";
 import ServicesPage from './pages/ServicesPage';
+import ContactPage from './pages/ContactPage';
 
 import AOS from "aos";
 import 'aos/dist/aos.css';
@@ -32,6 +33,7 @@ export default function App() {
         } />
         <Route path="/book" element={<BookingPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         </Routes>
         <Footer />
     </Router>
