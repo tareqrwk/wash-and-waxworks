@@ -31,20 +31,33 @@ function BookingPage(){
             alert("Please enter a valid 10-digit phone number.");
             return;
         }
-        console.log("Submitted Book:", formData);
-        setSubmitted(true);
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            car: '',
-            service: '',
-            date: '',
-            time: '',
-            notes: ''
-        });
-        setTimeout(() => setSubmitted(false), 4000);
-        // TODO: send to backend
+        fetch('http://localhost:5000/api/book',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data.message);
+                setSubmitted(true);
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    car: '',
+                    service: '',
+                    date: '',
+                    time: '',
+                    notes: ''
+                });
+                setTimeout(() => setSubmitted(false), 4000);
+            })
+            .catch((error) => {
+                console.error("Booking failed:", error);
+                alert("Something went wrong. Please try again.");
+            });
     }
 
     return(
