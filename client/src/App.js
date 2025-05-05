@@ -34,9 +34,10 @@ export default function App() {
         <Route path="/book" element={<BookingPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        </Routes>
-        <Footer />
+      </Routes>
+      <Footer />
     </Router>
+    
   );
 }
 

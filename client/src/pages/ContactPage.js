@@ -10,8 +10,7 @@ function ContactPage(){
         e.preventDefault();
 
         if (!form.name || !form.email || !form.message){
-            alert("Please fill out all fields before submitting.");
-            return;
+            alert("Pleast enter all required fields.")
         }
 
         try{

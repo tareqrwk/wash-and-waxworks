@@ -1,6 +1,6 @@
-import TestimonialCard from "./Testiomonial-card";
+import TestimonialCard from "./Testimonial-card";
 
-function Testiomonials(){
+function Testimonials(){
     return(
         <section className="bg-black py-20 px-4">
             <h2 className="text-4xl font-bold text-center text-white mb-12">What Our Clients Say</h2>
@@ -59,4 +59,4 @@ function Testiomonials(){
     );
 }
 
-export default Testiomonials;
+export default Testimonials;
