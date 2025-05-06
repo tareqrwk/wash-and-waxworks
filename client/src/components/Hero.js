@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 function Hero() {
     return (
       <div className="relative h-[500px] w-full overflow-hidden">
@@ -20,9 +21,11 @@ function Hero() {
           <h1 className="text-5xl font-bold mb-4">Wash&WaxWorks Car Detailing</h1>
           <p className="text-xl mb-2">Where Every Car Is Treated Like Royalty</p>
           <p className="text-sm text-gray-300 mb-6">Trusted by 50+ happy car owners</p>
-          <button className="bg-blueViolet text-white px-6 py-3 rounded-full font-semibold hover:bg-wildBlue hover:scale-105 hover:shadow-xl transition">
-            Book Now!
-          </button>
+          <Link to="/book">
+            <button className="bg-blueViolet text-white px-6 py-3 rounded-full font-semibold hover:bg-wildBlue hover:scale-105 hover:shadow-xl transition">
+              Book Now!
+            </button>
+          </Link>
         </div>
       </div>
     );
