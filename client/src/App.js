@@ -4,9 +4,11 @@ import Navbar from "./components/Navbar";
 import Services from "./components/Services";
 import Testiomonials from "./components/Testimonials";
 import Footer from "./components/Footer";
+import BeforeAfterGallery from './components/BeforeAfterGallery';
 import BookingPage from "./pages/BookingPage";
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+
 
 import AOS from "aos";
 import 'aos/dist/aos.css';
@@ -29,6 +31,7 @@ export default function App() {
             <Hero />
             <Services />
             <Testiomonials />
+            <BeforeAfterGallery />
           </>
         } />
         <Route path="/book" element={<BookingPage />} />
