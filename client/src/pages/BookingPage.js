@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 function BookingPage(){
     const [formData, setFormData] = useState({
@@ -11,6 +12,13 @@ function BookingPage(){
         time: '',
         notes: ''
     });
+    const [searchParams] = useSearchParams();
+    const prefilledService = searchParams.get('service');
+    useEffect(() => {
+        if (prefilledService){
+            setFormData((prev) => ({ ...prev, service: prefilledService}));
+        }
+    }, [prefilledService]);
     const [submitted, setSubmitted] = useState(false);
     const handleSubmit = (e) =>{
         e.preventDefault();

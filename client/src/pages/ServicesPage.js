@@ -1,4 +1,5 @@
 import ServicesPageCard from "../components/ServicesPageCard";
+import { Link } from 'react-router-dom';
 function ServicesPage(){
     return(
         <section className="bg-black text-white py-16 px-4">
@@ -21,7 +22,21 @@ function ServicesPage(){
                                  Or\n
                                  Upholstery Cleaning`}
                     price="$99.99"
+                    button={
+                        <Link to={`/book?service=${encodeURIComponent("Standard Detail Package")}`}>
+                            <button className="group relative mt-6 px-6 py-2 text-white font-semibold rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105">
+                            <span className="relative z-10 flex items-center gap-2">
+                                Book Now
+                                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7l7 7-7 7" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full blur-xl pointer-events-none"></div>
+                            </button>
+                        </Link>
+                    }
                 />
+                
                 <ServicesPageCard
                     data-aos="fade-down"
                     data-aos-delays="100"
@@ -40,6 +55,19 @@ function ServicesPage(){
                                  Or\n
                                  Upholstery Cleaning`}
                     price="$149.99"
+                    button={
+                        <Link to={`/book?service=${encodeURIComponent("Shiny Detail Package")}`}>
+                            <button className="group relative mt-6 px-6 py-2 text-white font-semibold rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105">
+                            <span className="relative z-10 flex items-center gap-2">
+                                Book Now
+                                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7l7 7-7 7" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full blur-xl pointer-events-none"></div>
+                            </button>
+                        </Link>
+                    }
                 />
                 <ServicesPageCard
                     data-aos="fade-up"
@@ -62,6 +90,19 @@ function ServicesPage(){
                                  Or\n
                                  Upholstery Cleaning`}
                     price="$199.99"
+                    button={
+                        <Link to={`/book?service=${encodeURIComponent("Platinum Detail Package")}`}>
+                            <button className="group relative mt-6 px-6 py-2 text-white font-semibold rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105">
+                            <span className="relative z-10 flex items-center gap-2">
+                                Book Now
+                                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7l7 7-7 7" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full blur-xl pointer-events-none"></div>
+                            </button>
+                        </Link>
+                    }
                 />
             </div>
             <h1 className="text-4xl font-bold text-center mb-12 mt-12"> Interior Detail Services</h1>
@@ -87,6 +128,19 @@ function ServicesPage(){
                                  Or\n
                                  Upholstery Cleaning`}
                     price="$174.99"
+                    button={
+                        <Link to={`/book?service=${encodeURIComponent("Full Interior Detail")}`}>
+                            <button className="group relative mt-6 px-6 py-2 text-white font-semibold rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105">
+                            <span className="relative z-10 flex items-center gap-2">
+                                Book Now
+                                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7l7 7-7 7" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full blur-xl pointer-events-none"></div>
+                            </button>
+                        </Link>
+                    }
                 />
                 <ServicesPageCard
                     data-aos="fade-down"
@@ -100,6 +154,19 @@ function ServicesPage(){
                                 Or\n
                                 Upholstery Cleaning`}
                     price="$74.99"
+                    button={
+                        <Link to={`/book?service=${encodeURIComponent("Standard Interior Detail")}`}>
+                            <button className="group relative mt-6 px-6 py-2 text-white font-semibold rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105">
+                            <span className="relative z-10 flex items-center gap-2">
+                                Book Now
+                                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7l7 7-7 7" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full blur-xl pointer-events-none"></div>
+                            </button>
+                        </Link>
+                    }
                 />
                 <ServicesPageCard
                     data-aos="fade-up"
@@ -110,6 +177,19 @@ function ServicesPage(){
                                 Tire Cleaning\n\n
                                 Quick Interior Vacuum`}
                     price="$24.99"
+                    button={
+                        <Link to={`/book?service=${encodeURIComponent("Quick Wash")}`}>
+                            <button className="group relative mt-6 px-6 py-2 text-white font-semibold rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105">
+                            <span className="relative z-10 flex items-center gap-2">
+                                Book Now
+                                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7l7 7-7 7" />
+                                </svg>
+                            </span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full blur-xl pointer-events-none"></div>
+                            </button>
+                        </Link>
+                    }
                 />
 
             </div>
