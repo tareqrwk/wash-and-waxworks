@@ -10,7 +10,7 @@ function BeforeAfterGallery(){
             <h2 className="text-4xl font-bold text-center mb-10">Before & After</h2>
             <div className="space-y-10 max-w-5xl mx-auto">
                 {pairs.map((pair, i) => 
-                    <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                    <div key={i} data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                         <div>
                             <p className="text-center text-sm text-gray-400 mb-2">Before</p>
                             <img src={pair.before} alt={`Before ${i}`} className="w-full rounded-lg border border-gray-700 object-contain h-auto" />
