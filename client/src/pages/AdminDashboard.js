@@ -1,0 +1,117 @@
+import { useEffect, useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import { format } from 'date-fns';
+import '../admin-bg.css'; 
+
+function AdminDashboard() {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/bookings')
+      .then(res => res.json())
+      .then(data => {
+        setBookings(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching bookings:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <section className="dashboard-gradient min-h-screen text-white p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Admin Dashboard</h1>
+
+      {loading ? (
+        <p className="text-center text-gray-400">Loading bookings...</p>
+      ) : bookings.length === 0 ? (
+        <p className="text-center text-gray-400">No bookings found.</p>
+      ) : (
+        <div className="overflow-x-auto shadow-lg rounded-xl">
+          <table className="w-full table-auto border-collapse bg-zinc-900 text-sm rounded-xl overflow-hidden">
+            <thead className="bg-purple-800 text-white">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Email</th>
+                <th className="p-3 text-left">Phone</th>
+                <th className="p-3 text-left">Service</th>
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Time</th>
+                <th className="p-3 text-left">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((b, i) => (
+                <tr
+                  key={i}
+                  className="hover:bg-purple-900/20 hover:scale-[1.01] transition-all duration-300 even:bg-zinc-900 odd:bg-zinc-950"
+                >
+                  <td className="p-3">{b.name}</td>
+                  <td className="p-3">{b.email}</td>
+                  <td className="p-3">{b.phone}</td>
+                  <td className="p-3">{b.service}</td>
+                  <td className="p-3">{b.date}</td>
+                  <td className="p-3">{b.time}</td>
+                  <td className="p-3">{b.notes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <div className="max-w-md mx-auto mt-10 p-6 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl">
+        <h2 className="text-2xl font-bold mb-4 text-center text-purple-400">Booking Calendar</h2>
+        <Calendar
+          onClickDay={(value) => setSelectedDate(format(value, 'yyyy-MM-dd'))}
+          tileContent={({ date }) => {
+            const formatted = format(date, 'yyyy-MM-dd');
+            const count = bookings.filter((b) => b.date === formatted).length;
+            return count > 0 ? (
+              <span className="text-xs text-purple-500 block text-center mt-1">📌 {count}</span>
+            ) : null;
+          }}
+          tileClassName={({ date }) => {
+            const formatted = format(date, 'yyyy-MM-dd');
+            return bookings.some((b) => b.date === formatted)
+              ? 'bg-purple-800 text-white rounded-xl'
+              : 'hover:bg-zinc-200 hover:scale-105 transition-all';
+          }}
+          className="rounded-lg p-4 bg-white text-black"
+        />
+
+        {selectedDate && (
+          <div className="mt-8">
+            <h3 className="text-xl font-bold mb-4">
+              Bookings on {selectedDate}
+            </h3>
+            <ul className="space-y-2">
+              {bookings
+                .filter((b) => b.date === selectedDate)
+                .map((b, i) => (
+                  <li
+                    key={i}
+                    className="bg-zinc-800 p-4 rounded-lg shadow hover:bg-purple-800/20 transition-all duration-300"
+                  >
+                    <p><strong>Name:</strong> {b.name}</p>
+                    <p><strong>Time:</strong> {b.time}</p>
+                    <p><strong>Service:</strong> {b.service}</p>
+                    <p><strong>Phone:</strong> {b.phone}</p>
+                  </li>
+                ))}
+              {bookings.filter((b) => b.date === selectedDate).length === 0 && (
+                <p className="text-gray-400">No bookings for this day.</p>
+              )}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export default AdminDashboard;
