@@ -8,6 +8,7 @@ import BeforeAfterGallery from './components/BeforeAfterGallery';
 import BookingPage from "./pages/BookingPage";
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
 import AOS from "aos";
@@ -37,7 +38,8 @@ export default function App() {
         <Route path="/book" element={<BookingPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
       <Footer />
     </Router>

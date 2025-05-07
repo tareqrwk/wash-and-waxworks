@@ -78,7 +78,7 @@ function AdminDashboard() {
           tileClassName={({ date }) => {
             const formatted = format(date, 'yyyy-MM-dd');
             return bookings.some((b) => b.date === formatted)
-              ? 'bg-purple-800 text-white rounded-xl'
+              ? 'bg-purple-800 text-purple-900 rounded-xl'
               : 'hover:bg-zinc-200 hover:scale-105 transition-all';
           }}
           className="rounded-lg p-4 bg-white text-black"
