@@ -75,6 +75,17 @@ app.post('/api/book', (req,res) => {
     });
 });
 
+app.get('/api/bookings', (req, res) => {
+    const filePath ='./bookings.json';
+    if (fs.existsSync(filePath)){
+        const bookings = JSON.parse(fs.readFileSync(filePath));
+        res.status(200).json(bookings);
+    }
+    else{
+        res.status(404).json({ message: "No bookings found."});
+    }
+})
+
 //Route to send emails for contact form
 app.post('/api/contact', (req, res) => {
     const { name, email, message } = req.body;
@@ -104,7 +115,6 @@ app.post('/api/contact', (req, res) => {
         }
     });
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
