@@ -116,6 +116,25 @@ app.post('/api/contact', (req, res) => {
     });
 });
 
+app.post('/api/login', (req, res) =>{
+    const { email, password } = req.body;
+
+    try {
+        const admins = JSON.parse(process.env.ADMINS);
+        const validAdmin = admins.find(admin => admin.email === email && admin.password === password);
+
+        if (!validAdmin) {
+            return res.status(401).json({ message: 'Unauthorized: Invalid credentials' });
+        }
+
+        const token = 'secure-admin-token';
+        return res.status(200).json({ token });
+    } catch (err) {
+        console.error('Failed to parse ADMINS:', err);
+        return res.status(500).json({ message: 'Server error. Invalid admin configuration.' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
