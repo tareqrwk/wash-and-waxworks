@@ -8,6 +8,7 @@ import BeforeAfterGallery from './components/BeforeAfterGallery';
 import BookingPage from "./pages/BookingPage";
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
+import ProtectedRoute from './components/ProtectedRoute';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
@@ -39,7 +40,14 @@ export default function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route
+            path="/admin-dashboard"
+            element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+            }
+            />
       </Routes>
       <Footer />
     </Router>
