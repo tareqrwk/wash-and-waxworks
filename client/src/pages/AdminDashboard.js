@@ -7,6 +7,7 @@ import '../admin-bg.css';
 function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visits, setVisits] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
@@ -22,10 +23,34 @@ function AdminDashboard() {
       });
   }, []);
 
+  useEffect(() => {
+    if(!localStorage.getItem("visitedWashWax")){
+      fetch("http://localhost:5000/api/visit", { method: "POST"})
+        .then(res => res.json())
+        .then(() => {
+          localStorage.setItem("visitedWashWax", "true");
+          fetch("http://localhost:5000/api/visit")
+            .then(res => res.json())
+            .then(data => setVisits(data.count))
+            .catch(err => console.error("Failed to fetch visit count", err));
+        })
+        .catch(err => console.error("Failed to track visit", err));
+    }
+    else{
+      fetch("http://localhost:5000/api/visit")
+        .then(res => res.json())
+        .then(data => setVisits(data.count))
+        .catch(err => console.error("Failed to track visit", err));
+    }
+  }, []);
+
   return (
     <section className="dashboard-gradient min-h-screen text-white p-8">
       <h1 className="text-3xl font-bold mb-6 text-center">Admin Dashboard</h1>
-
+      <div className="bg-zinc-800 text-center p-4 rounded-lg shadow mb-6 max-w-xs mx-auto border border-purple-700">
+        <p className="text-purple-400 text-sm">Total Website Visits</p>
+        <p className="text-3xl font-bold text-white">{visits}</p>
+      </div>
       {loading ? (
         <p className="text-center text-gray-400">Loading bookings...</p>
       ) : bookings.length === 0 ? (
