@@ -35,6 +35,12 @@ const bookingSchema = new mongoose.Schema({
 
 const Booking = mongoose.model('Booking', bookingSchema);
 
+const visitSchema = new mongoose.Schema({
+    count: { type: Number, default: 0}
+});
+
+const Visit = mongoose.model('Visit', visitSchema);
+
 //Route: Recieve booking and send confirmation email
 app.post('/api/book', async (req, res) => {
     const booking = new Booking(req.body);
@@ -148,6 +154,37 @@ app.post('/api/contact', (req, res) => {
             res.status(200).json({ message: 'Email sent successfully!' });
         }
     });
+});
+
+//Route to increment website visits
+app.post('/api/visit', async(req, res) => {
+    try{
+        let visitDoc = await Visit.findOne();
+        if (!visitDoc){
+            visitDoc = new Visit({ count: 1});
+        }
+        else{
+            visitDoc.count += 1
+        }
+        await visitDoc.save();
+        res.status(200).json({count: visitDoc.count});
+    }
+    catch (err) {
+        console.error("Visit increment failed", err);
+        res.status(500).json({ message: 'Failed to track visit.'});
+    }  
+});
+
+//Route to get website visits
+app.get('/api/visit', async (req, res) => {
+    try{
+        const visitDoc = await Visit.findOne();
+        res.status(200).json({ count: visitDoc?.count || 0});
+    }
+    catch (err) {
+        console.error("Fetch visits failed:", err);
+        res.status(500).json({message: "Failed to get visits."});
+    }
 });
 
 //Start the server
