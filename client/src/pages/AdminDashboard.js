@@ -5,18 +5,29 @@ import { format } from 'date-fns';
 import '../admin-bg.css'; 
 
 function AdminDashboard() {
+  //State to store bookings data
   const [bookings, setBookings] = useState([]);
+  //State to track loading status
   const [loading, setLoading] = useState(true);
+  //State to store total website visits
   const [visits, setVisits] = useState(0);
+  //State to store the selected date from the calendar
   const [selectedDate, setSelectedDate] = useState(null);
+  //State to store submitted reviews
   const [reviews, setReviews] = useState([]);
 
+  //Change tab title for page
+  useEffect(() => {
+    document.title = "Wash&WaxWorks | Admin"
+  }, []);
+
+  //Fetch bookings data from the API when the component mounts
   useEffect(() => {
     fetch('http://localhost:5000/api/bookings')
       .then(res => res.json())
       .then(data => {
-        setBookings(data);
-        setLoading(false);
+        setBookings(data); //Update bookings state
+        setLoading(false); //Set loading to false
       })
       .catch(err => {
         console.error('Error fetching bookings:', err);
@@ -24,27 +35,31 @@ function AdminDashboard() {
       });
   }, []);
 
+  //Track website visits and fetch visit count
   useEffect(() => {
     if(!localStorage.getItem("visitedWashWax")){
+      //If the user hasn't visited before, track the visit
       fetch("http://localhost:5000/api/visit", { method: "POST"})
         .then(res => res.json())
         .then(() => {
-          localStorage.setItem("visitedWashWax", "true");
+          localStorage.setItem("visitedWashWax", "true"); //Mark as visited
           fetch("http://localhost:5000/api/visit")
             .then(res => res.json())
-            .then(data => setVisits(data.count))
+            .then(data => setVisits(data.count)) //Update visit count
             .catch(err => console.error("Failed to fetch visit count", err));
         })
         .catch(err => console.error("Failed to track visit", err));
     }
     else{
+      //Fetch visit count if already visited
       fetch("http://localhost:5000/api/visit")
         .then(res => res.json())
-        .then(data => setVisits(data.count))
+        .then(data => setVisits(data.count)) //Update visit count
         .catch(err => console.error("Failed to track visit", err));
     }
   }, []);
 
+  //Fetch reviews data from the API when the component mounts
   useEffect(() => {
     fetch('http://localhost:5000/api/reviews')
       .then(res => res.json())
@@ -53,12 +68,18 @@ function AdminDashboard() {
   }, []);
 
   return (
+    //Main section container with gradient background and padding
     <section className="dashboard-gradient min-h-screen text-white p-8">
+      {/* Dashboard title */}
       <h1 className="text-3xl font-bold mb-6 text-center">Admin Dashboard</h1>
+
+      {/* Total website visits display */}
       <div className="bg-zinc-800 text-center p-4 rounded-lg shadow mb-6 max-w-xs mx-auto border border-purple-700">
         <p className="text-purple-400 text-sm">Total Website Visits</p>
         <p className="text-3xl font-bold text-white">{visits}</p>
       </div>
+
+      {/* Bookings table */}
       {loading ? (
         <p className="text-center text-gray-400">Loading bookings...</p>
       ) : bookings.length === 0 ? (
@@ -81,7 +102,7 @@ function AdminDashboard() {
             <tbody>
               {bookings.map((b, i) => (
                 <tr
-                  key={i}
+                  key={i} //Unique key for each booking
                   className="hover:bg-purple-900/20 hover:scale-[1.01] transition-all duration-300 even:bg-zinc-900 odd:bg-zinc-950"
                 >
                   <td className="p-3">{b.name}</td>
@@ -99,10 +120,11 @@ function AdminDashboard() {
         </div>
       )}
 
+      {/* Booking calendar */}
       <div className="max-w-md mx-auto mt-10 p-6 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl">
         <h2 className="text-2xl font-bold mb-4 text-center text-purple-400">Booking Calendar</h2>
         <Calendar
-          onClickDay={(value) => setSelectedDate(format(value, 'yyyy-MM-dd'))}
+          onClickDay={(value) => setSelectedDate(format(value, 'yyyy-MM-dd'))} //Handle date selection
           tileContent={({ date }) => {
             const formatted = format(date, 'yyyy-MM-dd');
             const count = bookings.filter((b) => b.date === formatted).length;
@@ -119,6 +141,7 @@ function AdminDashboard() {
           className="rounded-lg p-4 bg-white text-black"
         />
 
+        {/* Display bookings for the selected date */}
         {selectedDate && (
           <div className="mt-8">
             <h3 className="text-xl font-bold mb-4">
@@ -129,7 +152,7 @@ function AdminDashboard() {
                 .filter((b) => b.date === selectedDate)
                 .map((b, i) => (
                   <li
-                    key={i}
+                    key={i} //Unique key for each booking
                     className="bg-zinc-800 p-4 rounded-lg shadow hover:bg-purple-800/20 transition-all duration-300"
                   >
                     <p><strong>Name:</strong> {b.name}</p>
@@ -146,7 +169,8 @@ function AdminDashboard() {
           </div>
         )}
       </div>
-      
+
+      {/* Submitted reviews section */}
       <div className="mt-10">
         <h2 className="text-2xl font-bold mb-4 text-purple-400 text-center">Submitted Reviews</h2>
         <ul className="space-y-3">
@@ -176,7 +200,7 @@ function AdminDashboard() {
               ) : (
                 <p className="text-green-400 mt-2 text-sm">✅ Featured</p>
               )}
-              {/*Delete Button */}
+              {/* Delete Button */}
               <button 
                 className="mt-2 bg-red-600 hover:bg-red-800 px-4 py-1 rounded-md text-sm transition"
                 onClick={() => {

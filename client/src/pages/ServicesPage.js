@@ -1,12 +1,20 @@
 import ServicesPageCard from "../components/ServicesPageCard";
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; //Import Link for navigation
+import { useEffect } from "react";
 function ServicesPage(){
+    //Change tab title for page
+    useEffect(() => {
+            document.title = "Wash&WaxWorks | Services"
+    }, []);
+
     return(
         <section className="bg-black text-white py-16 px-4">
             <p className="text-2xl text-center mb-12 italic">100% SATISFACTION GUARANTEED</p>
+            {/* Section subtitle */}
             <h1 className="text-4xl font-bold text-center mb-12"> Full Detail Services (In & Out)</h1>
-            {/*Full Detail Services*/}
+            {/* Full Detail Services grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
+                {/* Standard Detail Package */}
                 <ServicesPageCard
                     data-aos="fade-up"
                     data-aos-delays="100"
@@ -37,6 +45,7 @@ function ServicesPage(){
                     }
                 />
                 
+                {/* Shiny Detail Package */}
                 <ServicesPageCard
                     data-aos="fade-down"
                     data-aos-delays="100"
@@ -69,6 +78,8 @@ function ServicesPage(){
                         </Link>
                     }
                 />
+
+                {/* Platinum Detail Package */}
                 <ServicesPageCard
                     data-aos="fade-up"
                     data-aos-delays="100"
@@ -105,8 +116,10 @@ function ServicesPage(){
                     }
                 />
             </div>
+            {/* Interior Detail Services Section */}
             <h1 className="text-4xl font-bold text-center mb-12 mt-12"> Interior Detail Services</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
+                {/* Full Interior Detail */}
                 <ServicesPageCard
                     data-aos="fade-up"
                     data-aos-delays="100"
@@ -142,6 +155,8 @@ function ServicesPage(){
                         </Link>
                     }
                 />
+
+                {/* Standard Interior Detail */}
                 <ServicesPageCard
                     data-aos="fade-down"
                     data-aos-delays="100"
@@ -168,6 +183,8 @@ function ServicesPage(){
                         </Link>
                     }
                 />
+
+                {/* Quick Wash */}
                 <ServicesPageCard
                     data-aos="fade-up"
                     data-aos-delays="100"

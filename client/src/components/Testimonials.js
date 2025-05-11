@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; //Import React hooks
 import TestimonialCard from "./Testimonial-card";
 
+//Functional component to render the "Testimonials" section
 function Testimonials() {
+  //State to store featured reviews fetched from the API
   const [featuredReviews, setFeaturedReviews] = useState([]);
 
+  //Fetch featured reviews from the API when the component mounts
   useEffect(() => {
     fetch('http://localhost:5000/api/reviews/featured')
       .then(res => res.json())
@@ -13,7 +16,9 @@ function Testimonials() {
 
   return (
     <section className="bg-black py-20 px-4">
+      {/* Section title */}
       <h2 className="text-4xl font-bold text-center text-white mb-12">What Our Clients Say</h2>
+      {/* Grid container for testimonial cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {[
           {
@@ -42,27 +47,28 @@ function Testimonials() {
           },
         ].map((r, i) => (
           <TestimonialCard
-            key={i}
-            name={r.name}
-            quote={r.quote}
+            key={i} //Unique key for each testimonial
+            name={r.name} //Client's name
+            quote={r.quote} //Client's testimonial
             image={`https://ui-avatars.com/api/?name=${encodeURIComponent(
               r.name
-            )}&background=4C1D95&color=fff`}
-            animate="fade-left"
-            delay={i * 100}
+            )}&background=4C1D95&color=fff`} //Generate avatar image dynamically
+            animate="fade-left" //Animation type
+            delay={i * 100} //Animation delay based on index
           />
         ))}
 
+        {/* Dynamically fetched featured reviews */}
         {featuredReviews.map((r, i) => (
           <TestimonialCard
-            key={r._id}
-            name={r.name}
-            quote={r.review}
+            key={r._id} //Unique key from the API data
+            name={r.name} //Client's name from the API
+            quote={r.review} //Client's review from the API
             image={`https://ui-avatars.com/api/?name=${encodeURIComponent(
               r.name
-            )}&background=4C1D95&color=fff`}
-            animate="fade-left"
-            delay={(i + 5) * 100} 
+            )}&background=4C1D95&color=fff`} //Generate avatar image dynamically
+            animate="fade-left" //Animation type
+            delay={(i + 5) * 100} //Animation delay based on index
           />
         ))}
       </div>
