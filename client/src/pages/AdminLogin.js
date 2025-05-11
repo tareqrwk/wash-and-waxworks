@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import {Eye, EyeOff} from 'lucide-react'
 
 function AdminLogin(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -61,15 +63,22 @@ function AdminLogin(){
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <input
-                    type="password"
-                    placeholder='Password'
-                    className="w-full p-3 rounded-md bg-gray-800 text-white focus:outline-none"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder='Password'
+                        className="w-full p-3 rounded-md bg-gray-800 text-white focus:outline-none pr-10"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-white">
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                </div>
+                
                 <button
                     type="submit"
                     className='w-full bg-purple-600 hover:bg-purple-800 transition rounded-md py-2 text-white font-semibold'   
