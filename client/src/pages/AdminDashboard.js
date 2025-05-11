@@ -9,6 +9,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [visits, setVisits] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:5000/api/bookings')
@@ -42,6 +43,13 @@ function AdminDashboard() {
         .then(data => setVisits(data.count))
         .catch(err => console.error("Failed to track visit", err));
     }
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/reviews')
+      .then(res => res.json())
+      .then(data => setReviews(data))
+      .catch(err => console.error('Error fetching reviews:', err));
   }, []);
 
   return (
@@ -134,6 +142,59 @@ function AdminDashboard() {
             </ul>
           </div>
         )}
+      </div>
+      
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold mb-4 text-purple-400 text-center">Submitted Reviews</h2>
+        <ul className="space-y-3">
+        {reviews.map((r, i) => (
+          <li key={i} className="bg-zinc-800 p-4 rounded-lg shadow">
+            <p><strong>{r.name}:</strong> {r.review}</p>
+            <div className="flex flex-wrap items-center gap-3 mt-3">
+              {/*Feature Button */}
+              {!r.featured ? (
+                <button
+                  className="mt-2 bg-purple-700 hover:bg-purple-900 px-4 py-1 rounded-md text-sm transition"
+                  onClick={() => {
+                    fetch(`http://localhost:5000/api/reviews/${r._id}/feature`, {
+                      method: 'PUT',
+                    })
+                      .then(res => res.json())
+                      .then((updated) => {
+                        setReviews(prev =>
+                          prev.map(rv => rv._id === updated._id ? updated : rv)
+                        );
+                      })
+                      .catch(() => alert("Failed to feature review"));
+                  }}
+                >
+                  ➕ Add to Homepage
+                </button>
+              ) : (
+                <p className="text-green-400 mt-2 text-sm">✅ Featured</p>
+              )}
+              {/*Delete Button */}
+              <button 
+                className="mt-2 bg-red-600 hover:bg-red-800 px-4 py-1 rounded-md text-sm transition"
+                onClick={() => {
+                  if(window.confirm('Are you sure you want to delete this review?')){
+                    fetch(`http://localhost:5000/api/review/${r._id}`, {
+                      method: 'DELETE',
+                    })
+                      .then(res => res.json())
+                      .then(() => {
+                        setReviews(prev => prev.filter(rv => rv._id !== r._id));
+                      })
+                      .catch(() => alert('Failed to delete review'));
+                  }
+                }}
+              >
+                🗑️ Delete
+              </button>
+            </div>
+          </li>
+        ))}
+        </ul>
       </div>
     </section>
   );
