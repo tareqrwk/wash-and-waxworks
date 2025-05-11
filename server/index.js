@@ -30,6 +30,7 @@ const bookingSchema = new mongoose.Schema({
     service: String,
     date: String,
     time: String,
+    location: String,
     notes: String
 });
 
