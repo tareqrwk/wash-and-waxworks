@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# 🚗 Wash&WaxWorks - Car Detailing Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 🔧 Features
 
-In the project directory, you can run:
+### 💻 Client-Side (Frontend)
+- ✅ Mobile-responsive UI built with **Tailwind CSS**
+- 🧾 Service booking form with real-time validation
+- 🎯 Prefilled booking page from service page
+- 🗓️ Scroll-triggered animations using **AOS**
+- 📩 Contact form to reach the business via email
+- ⭐ Review form for client feedback
+- 📸 Before-and-after gallery
+- 📊 Page visit counter
 
-### `npm start`
+### 🔐 Admin-Side (Dashboard)
+- 🔐 Secure login system for admins
+- 📋 View all bookings in a table and calendar
+- 🔎 Filter bookings by date
+- 🌍 View total website visits
+- 💬 View, feature, and delete reviews
+- ➕ One-click add-to-homepage for testimonials
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧰 Tech Stack
 
-### `npm test`
+| Layer     | Technologies                              |
+|-----------|-------------------------------------------|
+| Frontend  | React, Tailwind CSS, AOS, React Router    |
+| Backend   | Node.js, Express.js, Nodemailer           |
+| Database  | MongoDB with Mongoose                     |
+| Email     | Gmail SMTP via Nodemailer                 |
+| Deployment| Render (Server), Vercel/Netlify (Frontend)|
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📁 Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+wash-and-waxworks/
+├── client/ # React Frontend
+│ ├── components/ # UI Components (Hero, Navbar, etc.)
+│ ├── pages/ # Route-level Pages (Booking, Admin)
+│ ├── App.js # Router and Layout
+│ └── ...
+├── server/ # Express Backend
+│ ├── index.js # API Routes and Server Logic
+│ └── ...
+├── .env # Environment Variables
+└── README.md # Project Documentation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚀 Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1. Clone the Repository
 
-### `npm run eject`
+```bash
+git clone https://github.com/yourusername/wash-and-waxworks.git
+cd wash-and-waxworks
+```
+### 2. Install dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+Frontend:
+cd client
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Backend:
+cd server
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. Set Up Enviroment Variables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+MONGO_URI=your_mongodb_connection_string
+EMAIL_USER=your_gmail@gmail.com
+EMAIL_PASS=your_gmail_app_password
+ADMINS=[{"email":"admin@example.com","password":"yourPassword123"}]
+💡 Make sure you've enabled "Less secure apps" or created an App Password in your Gmail account.
 
-## Learn More
+## 🌐 Deployment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Frontend: Deploy using Vercel or Netlify
+Backend: Deploy using Render or Railway
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Custom Domain
 
-### Code Splitting
+You can connect a custom domain by:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Purchasing a domain (GoDaddy, Namecheap, etc.)
+2. Linking it to Vercel/Netlify in your dashboard
+3. Updating environment variables (localhost → new domain if needed for backend URLs)
 
-### Analyzing the Bundle Size
+## 🙌 Acknowledgements
+Built by Tareq Kurdiah as a portfolio project to practice full-stack development, UI/UX design, backend integration, and production deployment. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+📬 Contact
+📧 Email: tareqrwk@gmail.com
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+📄 License
+This project is for educational, portfolio, and business use only. All rights reserved © 2025.
