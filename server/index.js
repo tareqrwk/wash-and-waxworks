@@ -35,11 +35,21 @@ const bookingSchema = new mongoose.Schema({
 
 const Booking = mongoose.model('Booking', bookingSchema);
 
+//Visit Count Schema
 const visitSchema = new mongoose.Schema({
     count: { type: Number, default: 0}
 });
 
 const Visit = mongoose.model('Visit', visitSchema);
+
+//Review Schema
+const reviewSchema = new mongoose.Schema({
+    name: String,
+    review: String,
+    featured: {type: Boolean, default: false},
+});
+
+const Review = mongoose.model("Review", reviewSchema);
 
 //Route: Recieve booking and send confirmation email
 app.post('/api/book', async (req, res) => {
@@ -184,6 +194,78 @@ app.get('/api/visit', async (req, res) => {
     catch (err) {
         console.error("Fetch visits failed:", err);
         res.status(500).json({message: "Failed to get visits."});
+    }
+});
+
+//Route to save reviews
+app.post('/api/review', async (req, res) => {
+    const { name, review } = req.body;
+    if(!name || !review){
+        return res.status(400).json({ message: 'Name and review are required.' });
+    }
+
+    try{
+        const newReview = new Review ({ name, review });
+        await newReview.save();
+        res.status(200).json({ message: 'Review saved successfully!' });
+    }
+    catch(err){
+        console.error('Review save error:', err);
+        res.status(500).json({ message: "Failed to save review."})
+    }
+});
+
+//Route to fetch reviews
+app.get('/api/reviews', async (req, res) => {
+    try{
+        const reviews = await Review.find();
+        res.status(200).json(reviews);
+    }
+    catch(err){
+        console.error('Failed to load reviews');
+        res.status(500).json({ message: 'Failed to retrieve reviews' });
+    }
+});
+
+//Route to get featured reviews only
+app.get('/api/reviews/featured', async (req, res) => {
+  try {
+    const featuredReviews = await Review.find({ featured: true });
+    res.status(200).json(featuredReviews);
+  } catch (err) {
+    console.error('Error fetching featured reviews:', err);
+    res.status(500).json({ message: 'Failed to retrieve featured reviews' });
+  }
+});
+
+//Route to mark a review as featured (for homepage)
+app.put('/api/reviews/:id/feature', async (req, res) => {
+    try {
+        const review = await Review.findByIdAndUpdate(
+            req.params.id,
+            { featured: true },
+            { new: true }
+        );
+        res.status(200).json(review);
+    } 
+    catch (err) {
+        console.error('Failed to feature review:', err);
+        res.status(500).json({ message: 'Could not feature review' });
+    }
+});
+
+//Route to delete a review
+app.delete('/api/review/:id', async (req, res) => {
+    try{
+        const deleted = await Review.findByIdAndDelete(req.params.id);
+        if(!deleted) {
+            return res.status(404).json({ message: 'Review not found.' });
+        }
+        res.status(200).json({ message: 'Review deleted successfuly.', id: req.params.id });
+    }
+    catch(err) {
+        console.error('Deleted review failed:', err);
+        res.status(500).json({ message: 'Failed to delete review.'});
     }
 });
 
