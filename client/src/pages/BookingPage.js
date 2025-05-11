@@ -10,6 +10,7 @@ function BookingPage(){
         service: '',
         date: '',
         time: '',
+        location: '',
         notes: ''
     });
     const [searchParams] = useSearchParams();
@@ -23,7 +24,7 @@ function BookingPage(){
     const handleSubmit = (e) =>{
         e.preventDefault();
         // Required Field Check
-        if (!formData.name || !formData.phone || !formData.service || !formData.date || !formData.time){
+        if (!formData.name || !formData.phone || !formData.service || !formData.date || !formData.time || !formData.location){
             alert("Please fill out all required fields.")
             return;
         }
@@ -58,6 +59,7 @@ function BookingPage(){
                     service: '',
                     date: '',
                     time: '',
+                    location: '',
                     notes: ''
                 });
                 setTimeout(() => setSubmitted(false), 4000);
@@ -135,6 +137,13 @@ function BookingPage(){
                     className="w-full p-3 rounded-md bg-gray-800 text-white focus:outline-none"
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value})}
+                />
+                <input
+                    type="text"
+                    placeholder="Your location"
+                    className="w-full p-3 rounded-md bg-gray-800 text-white focus:outline-none"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value})}
                 />
                 <textarea
                     rows={4}

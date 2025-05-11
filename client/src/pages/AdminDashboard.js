@@ -74,6 +74,7 @@ function AdminDashboard() {
                 <th className="p-3 text-left">Service</th>
                 <th className="p-3 text-left">Date</th>
                 <th className="p-3 text-left">Time</th>
+                <th className="p-3 text-left">Location</th>
                 <th className="p-3 text-left">Notes</th>
               </tr>
             </thead>
@@ -89,6 +90,7 @@ function AdminDashboard() {
                   <td className="p-3">{b.service}</td>
                   <td className="p-3">{b.date}</td>
                   <td className="p-3">{b.time}</td>
+                  <td className="p-3">{b.location}</td>
                   <td className="p-3">{b.notes}</td>
                 </tr>
               ))}
@@ -133,6 +135,7 @@ function AdminDashboard() {
                     <p><strong>Name:</strong> {b.name}</p>
                     <p><strong>Time:</strong> {b.time}</p>
                     <p><strong>Service:</strong> {b.service}</p>
+                    <p><strong>Location:</strong> {b.location}</p>
                     <p><strong>Phone:</strong> {b.phone}</p>
                   </li>
                 ))}
