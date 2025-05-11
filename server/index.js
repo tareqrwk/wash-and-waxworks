@@ -1,27 +1,27 @@
 // server/index.js
+require('dotenv').config(); //Load environment variables from .env file
+const express = require('express'); //Import Express framework
+const cors = require('cors'); //Import CORS middleware
+const mongoose = require('mongoose'); //Import Mongoose for MongoDB interaction
+const bodyParser = require('body-parser'); //Import body-parser for parsing JSON requests
+const nodemailer = require('nodemailer'); //Import nodemailer for sending emails
 
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
+const app = express(); //Initialize Express app
+const PORT = 5000; //Define the server port
 
-const app = express();
-const PORT = 5000;
-
-app.use(cors());
-app.use(bodyParser.json());
+//Middleware setup
+app.use(cors()); //Enable CORS for cross-origin requests
+app.use(bodyParser.json()); //Parse incoming JSON requests
 
 //Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('MongoDB connection error:', err))
 
-//Booking Schema
+//Define Booking Schema
 const bookingSchema = new mongoose.Schema({
     name: String, 
     email: String,
@@ -34,30 +34,33 @@ const bookingSchema = new mongoose.Schema({
     notes: String
 });
 
+//Define Booking model
 const Booking = mongoose.model('Booking', bookingSchema);
 
-//Visit Count Schema
+//Define Visit Count Schema
 const visitSchema = new mongoose.Schema({
     count: { type: Number, default: 0}
 });
 
+//Define Visit model
 const Visit = mongoose.model('Visit', visitSchema);
 
-//Review Schema
+//Define Review Schema
 const reviewSchema = new mongoose.Schema({
     name: String,
     review: String,
     featured: {type: Boolean, default: false},
 });
 
+//Define Review model
 const Review = mongoose.model("Review", reviewSchema);
 
 //Route: Recieve booking and send confirmation email
 app.post('/api/book', async (req, res) => {
-    const booking = new Booking(req.body);
+    const booking = new Booking(req.body); //Create a new booking document
 
     try{
-        await booking.save();
+        await booking.save(); //Save booking to the database
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -66,6 +69,7 @@ app.post('/api/book', async (req, res) => {
             }
         });
 
+        //Email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: booking.email,
@@ -96,6 +100,8 @@ app.post('/api/book', async (req, res) => {
             </div>
             `
         };
+
+        //Send email
         transporter.sendMail(mailOptions, (err, info) => {
             if (err){
                 console.log('Email error:', err);
@@ -114,8 +120,8 @@ app.post('/api/book', async (req, res) => {
 //Route: Get all bookings
 app.get('/api/bookings', async (req, res) => {
     try{
-        const bookings = await Booking.find();
-        res.status(200).json(bookings);
+        const bookings = await Booking.find(); //Fetch all bookings from the database
+        res.status(200).json(bookings); //Send bookings as JSON response
     }
     catch(err){
         res.status(500).json({ message: 'Failed to retrieve bookings.' });
@@ -134,13 +140,14 @@ app.post('/api/login', (req, res) => {
         return res.status(401).json({ message: 'Unauthorized: Invalid credentials'});
     }
 
-    res.status(200).json({ token: 'secure-admin-token'});
+    res.status(200).json({ token: 'secure-admin-token'}); //Send a mock token for authentication
 });
 
 //Route: Contact form submission
 app.post('/api/contact', (req, res) => {
-    const { name, email, message } = req.body;
+    const { name, email, message } = req.body; //Extract contact form data
 
+    //Configure nodemailer transporter
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth:{
@@ -149,6 +156,7 @@ app.post('/api/contact', (req, res) => {
         }
     });
 
+    //Email options
     const mailOptions = {
         from: email,
         to: process.env.EMAIL_USER,
@@ -156,6 +164,7 @@ app.post('/api/contact', (req, res) => {
         text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
     };
 
+    //Send email
     transporter.sendMail(mailOptions, (err, info) => {
         if (err){
             console.error(err);
@@ -170,15 +179,15 @@ app.post('/api/contact', (req, res) => {
 //Route to increment website visits
 app.post('/api/visit', async(req, res) => {
     try{
-        let visitDoc = await Visit.findOne();
+        let visitDoc = await Visit.findOne(); //Find the visit document
         if (!visitDoc){
-            visitDoc = new Visit({ count: 1});
+            visitDoc = new Visit({ count: 1}); //Create a new document if none exists
         }
         else{
-            visitDoc.count += 1
+            visitDoc.count += 1 //Increment the visit count
         }
-        await visitDoc.save();
-        res.status(200).json({count: visitDoc.count});
+        await visitDoc.save(); //Save the updated document
+        res.status(200).json({count: visitDoc.count}); //Send the updated count
     }
     catch (err) {
         console.error("Visit increment failed", err);
@@ -189,8 +198,8 @@ app.post('/api/visit', async(req, res) => {
 //Route to get website visits
 app.get('/api/visit', async (req, res) => {
     try{
-        const visitDoc = await Visit.findOne();
-        res.status(200).json({ count: visitDoc?.count || 0});
+        const visitDoc = await Visit.findOne(); //Fetch the visit document
+        res.status(200).json({ count: visitDoc?.count || 0}); //Send the visit count
     }
     catch (err) {
         console.error("Fetch visits failed:", err);
@@ -200,14 +209,14 @@ app.get('/api/visit', async (req, res) => {
 
 //Route to save reviews
 app.post('/api/review', async (req, res) => {
-    const { name, review } = req.body;
+    const { name, review } = req.body; //Extract review data
     if(!name || !review){
         return res.status(400).json({ message: 'Name and review are required.' });
     }
 
     try{
-        const newReview = new Review ({ name, review });
-        await newReview.save();
+        const newReview = new Review ({ name, review }); //Create a new review document
+        await newReview.save(); //Save the review to the database
         res.status(200).json({ message: 'Review saved successfully!' });
     }
     catch(err){
@@ -219,8 +228,8 @@ app.post('/api/review', async (req, res) => {
 //Route to fetch reviews
 app.get('/api/reviews', async (req, res) => {
     try{
-        const reviews = await Review.find();
-        res.status(200).json(reviews);
+        const reviews = await Review.find(); //Fetch all reviews from the database
+        res.status(200).json(reviews); //Send reviews as JSON response
     }
     catch(err){
         console.error('Failed to load reviews');
@@ -231,8 +240,8 @@ app.get('/api/reviews', async (req, res) => {
 //Route to get featured reviews only
 app.get('/api/reviews/featured', async (req, res) => {
   try {
-    const featuredReviews = await Review.find({ featured: true });
-    res.status(200).json(featuredReviews);
+    const featuredReviews = await Review.find({ featured: true }); //Fetch only featured reviews
+    res.status(200).json(featuredReviews); //Send featured reviews as JSON response
   } catch (err) {
     console.error('Error fetching featured reviews:', err);
     res.status(500).json({ message: 'Failed to retrieve featured reviews' });
@@ -243,11 +252,11 @@ app.get('/api/reviews/featured', async (req, res) => {
 app.put('/api/reviews/:id/feature', async (req, res) => {
     try {
         const review = await Review.findByIdAndUpdate(
-            req.params.id,
-            { featured: true },
-            { new: true }
-        );
-        res.status(200).json(review);
+            req.params.id, //Find review by ID
+            { featured: true }, //Update featured status to true
+            { new: true } //Return the updated document
+        ); 
+        res.status(200).json(review); //Send the updated review
     } 
     catch (err) {
         console.error('Failed to feature review:', err);
@@ -258,7 +267,7 @@ app.put('/api/reviews/:id/feature', async (req, res) => {
 //Route to delete a review
 app.delete('/api/review/:id', async (req, res) => {
     try{
-        const deleted = await Review.findByIdAndDelete(req.params.id);
+        const deleted = await Review.findByIdAndDelete(req.params.id);  //Delete review by ID
         if(!deleted) {
             return res.status(404).json({ message: 'Review not found.' });
         }
