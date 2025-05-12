@@ -26,7 +26,7 @@ function ContactPage(){
 
         try{
             //Send contact form data to the server
-            const res = await fetch('http://localhost:5000/api/contact', {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form) //Send form data as JSON
@@ -49,7 +49,7 @@ function ContactPage(){
         if (!reviewData.name || !reviewData.review) return alert ("Please fill out all fields");
 
         // Send review data to the server
-        fetch('http://localhost:5000/api/review', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/review`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(reviewData), //Send review data as JSON

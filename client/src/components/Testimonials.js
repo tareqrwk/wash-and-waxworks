@@ -8,7 +8,7 @@ function Testimonials() {
 
   //Fetch featured reviews from the API when the component mounts
   useEffect(() => {
-    fetch('http://localhost:5000/api/reviews/featured')
+    fetch(`${process.env.REACT_APP_API_URL}/api/reviews/featured`)
       .then(res => res.json())
       .then(data => setFeaturedReviews(data))
       .catch(err => console.error("Failed to load featured reviews", err));

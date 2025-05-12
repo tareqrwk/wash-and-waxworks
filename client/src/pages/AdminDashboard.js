@@ -23,7 +23,7 @@ function AdminDashboard() {
 
   //Fetch bookings data from the API when the component mounts
   useEffect(() => {
-    fetch('http://localhost:5000/api/bookings')
+    fetch(`${process.env.REACT_APP_API_URL}/api/bookings`)
       .then(res => res.json())
       .then(data => {
         setBookings(data); //Update bookings state
@@ -39,11 +39,11 @@ function AdminDashboard() {
   useEffect(() => {
     if(!localStorage.getItem("visitedWashWax")){
       //If the user hasn't visited before, track the visit
-      fetch("http://localhost:5000/api/visit", { method: "POST"})
+      fetch(`${process.env.REACT_APP_API_URL}/api/visit`, { method: "POST"})
         .then(res => res.json())
         .then(() => {
           localStorage.setItem("visitedWashWax", "true"); //Mark as visited
-          fetch("http://localhost:5000/api/visit")
+          fetch(`${process.env.REACT_APP_API_URL}/api/visit`)
             .then(res => res.json())
             .then(data => setVisits(data.count)) //Update visit count
             .catch(err => console.error("Failed to fetch visit count", err));
@@ -52,7 +52,7 @@ function AdminDashboard() {
     }
     else{
       //Fetch visit count if already visited
-      fetch("http://localhost:5000/api/visit")
+      fetch(`${process.env.REACT_APP_API_URL}/api/visit`)
         .then(res => res.json())
         .then(data => setVisits(data.count)) //Update visit count
         .catch(err => console.error("Failed to track visit", err));
@@ -61,7 +61,7 @@ function AdminDashboard() {
 
   //Fetch reviews data from the API when the component mounts
   useEffect(() => {
-    fetch('http://localhost:5000/api/reviews')
+    fetch(`${process.env.REACT_APP_API_URL}/api/reviews`)
       .then(res => res.json())
       .then(data => setReviews(data))
       .catch(err => console.error('Error fetching reviews:', err));
@@ -183,7 +183,7 @@ function AdminDashboard() {
                 <button
                   className="mt-2 bg-purple-700 hover:bg-purple-900 px-4 py-1 rounded-md text-sm transition"
                   onClick={() => {
-                    fetch(`http://localhost:5000/api/reviews/${r._id}/feature`, {
+                    fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${r._id}/feature`, {
                       method: 'PUT',
                     })
                       .then(res => res.json())
@@ -205,7 +205,7 @@ function AdminDashboard() {
                 className="mt-2 bg-red-600 hover:bg-red-800 px-4 py-1 rounded-md text-sm transition"
                 onClick={() => {
                   if(window.confirm('Are you sure you want to delete this review?')){
-                    fetch(`http://localhost:5000/api/review/${r._id}`, {
+                    fetch(`${process.env.REACT_APP_API_URL}/api/review/${r._id}`, {
                       method: 'DELETE',
                     })
                       .then(res => res.json())
