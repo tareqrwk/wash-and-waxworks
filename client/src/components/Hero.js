@@ -18,7 +18,7 @@ function Hero() {
   
         {/* Content */}
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center text-white px-4">
-          <h1 className="text-5xl font-bold mb-4">Wash&WaxWorks Car Detailing</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">Wash&WaxWorks Car Detailing</h1>
           <p className="text-xl mb-2">Where Every Car Is Treated Like Royalty</p>
           <p className="text-sm text-gray-300 mb-6">Trusted by 50+ happy car owners</p>
           <Link to="/book">
