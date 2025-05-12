@@ -72,11 +72,19 @@ npm install
 
 ### 3. Set Up Enviroment Variables
 
+In your backend root folder create
+a .env file that includes the following:
+
 MONGO_URI=your_mongodb_connection_string
 EMAIL_USER=your_gmail@gmail.com
 EMAIL_PASS=your_gmail_app_password
 ADMINS=[{"email":"admin@example.com","password":"yourPassword123"}]
 💡 Make sure you've enabled "Less secure apps" or created an App Password in your Gmail account.
+
+In your frontend root folder create
+a .env file that includes the following:
+
+REACT_APP_API_URL=https://wash-and-waxworks.onrender.com
 
 ## 🌐 Deployment
 
