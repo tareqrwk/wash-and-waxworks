@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  background-color: black;
+}
+
 /* admin-bg.css */
 .dashboard-gradient {
     background: radial-gradient(ellipse at center, rgba(91, 33, 182, 0.15), transparent 70%),
