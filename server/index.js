@@ -2,9 +2,9 @@
 require('dotenv').config(); //Load environment variables from .env file
 const express = require('express'); //Import Express framework
 const cors = require('cors'); //Import CORS middleware
-const mongoose = require('mongoose'); //Import Mongoose for MongoDB interaction
 const bodyParser = require('body-parser'); //Import body-parser for parsing JSON requests
 const nodemailer = require('nodemailer'); //Import nodemailer for sending emails
+const { createClient } = require('@supabase/supabase-js'); //Import Supabase client
 
 const app = express(); //Initialize Express app
 const PORT = 5000; //Define the server port
@@ -13,54 +13,21 @@ const PORT = 5000; //Define the server port
 app.use(cors()); //Enable CORS for cross-origin requests
 app.use(bodyParser.json()); //Parse incoming JSON requests
 
-//Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('MongoDB connection error:', err))
-
-//Define Booking Schema
-const bookingSchema = new mongoose.Schema({
-    name: String, 
-    email: String,
-    phone: String,
-    car: String,
-    service: String,
-    date: String,
-    time: String,
-    location: String,
-    notes: String
-});
-
-//Define Booking model
-const Booking = mongoose.model('Booking', bookingSchema);
-
-//Define Visit Count Schema
-const visitSchema = new mongoose.Schema({
-    count: { type: Number, default: 0}
-});
-
-//Define Visit model
-const Visit = mongoose.model('Visit', visitSchema);
-
-//Define Review Schema
-const reviewSchema = new mongoose.Schema({
-    name: String,
-    review: String,
-    featured: {type: Boolean, default: false},
-});
-
-//Define Review model
-const Review = mongoose.model("Review", reviewSchema);
+//Connect to Supabase
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+console.log('Connected to Supabase');
 
 //Route: Recieve booking and send confirmation email
 app.post('/api/book', async (req, res) => {
-    const booking = new Booking(req.body); //Create a new booking document
+    const { name, email, phone, car, service, date, time, location, notes } = req.body;
 
     try{
-        await booking.save(); //Save booking to the database
+        const { data, error } = await supabase
+            .from('bookings')
+            .insert([{ name, email, phone, car, service, date, time, location, notes }]);
+
+        if (error) throw error;
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -72,7 +39,7 @@ app.post('/api/book', async (req, res) => {
         //Email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: booking.email,
+            to: email,
             subject: '✅ Your Booking is Confirmed - Wash&WaxWorks',
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; color: #333;">
@@ -82,14 +49,14 @@ app.post('/api/book', async (req, res) => {
                             <p style="margin: 5px 0 0; font-size: 14px;">Your Car. Our Care.</p>
                         </div>
                     <div style="padding: 30px;">
-                        <h2 style="color: #1f2937;">Hi ${booking.name},</h2>
+                        <h2 style="color: #1f2937;">Hi ${name},</h2>
                         <p>Here are your appointment details:</p>
                         <ul style="list-style: none; padding: 0;">
-                            <li><strong>Service:</strong> ${booking.service}</li>
-                            <li><strong>Date:</strong> ${booking.date}</li>
-                            <li><strong>Time:</strong> ${booking.time}</li>
+                            <li><strong>Service:</strong> ${service}</li>
+                            <li><strong>Date:</strong> ${date}</li>
+                            <li><strong>Time:</strong> ${time}</li>
                         </ul>
-                        ${booking.notes? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ''}
+                        ${notes? `<p><strong>Notes:</strong> ${notes}</p>` : ''}
                         <p style="margin-top: 30px;">If you have any questions, feel free to reply to this email.</p>
                     </div>
                     <div style="background-color: #111827; padding: 20px; color: #aaa; text-align: center; font-size: 12px;">
@@ -120,8 +87,13 @@ app.post('/api/book', async (req, res) => {
 //Route: Get all bookings
 app.get('/api/bookings', async (req, res) => {
     try{
-        const bookings = await Booking.find(); //Fetch all bookings from the database
-        res.status(200).json(bookings); //Send bookings as JSON response
+        const { data, error } = await supabase
+            .from('bookings')
+            .select('*');
+
+        if (error) throw error;
+
+        res.status(200).json(data); //Send bookings as JSON response
     }
     catch(err){
         res.status(500).json({ message: 'Failed to retrieve bookings.' });
@@ -179,15 +151,37 @@ app.post('/api/contact', (req, res) => {
 //Route to increment website visits
 app.post('/api/visit', async(req, res) => {
     try{
-        let visitDoc = await Visit.findOne(); //Find the visit document
-        if (!visitDoc){
-            visitDoc = new Visit({ count: 1}); //Create a new document if none exists
+        // Check if a visit row exists
+        const { data: existing, error: fetchError } = await supabase
+            .from('visits')
+            .select('*')
+            .limit(1)
+            .single();
+
+        if (fetchError && fetchError.code !== 'PGRST116') throw fetchError; // PGRST116 = no rows
+
+        if (!existing) {
+            // Create the first visit row
+            const { data, error } = await supabase
+                .from('visits')
+                .insert([{ count: 1 }])
+                .select()
+                .single();
+
+            if (error) throw error;
+            res.status(200).json({ count: data.count });
+        } else {
+            // Increment the existing row
+            const { data, error } = await supabase
+                .from('visits')
+                .update({ count: existing.count + 1 })
+                .eq('id', existing.id)
+                .select()
+                .single();
+
+            if (error) throw error;
+            res.status(200).json({ count: data.count });
         }
-        else{
-            visitDoc.count += 1 //Increment the visit count
-        }
-        await visitDoc.save(); //Save the updated document
-        res.status(200).json({count: visitDoc.count}); //Send the updated count
     }
     catch (err) {
         console.error("Visit increment failed", err);
@@ -198,8 +192,15 @@ app.post('/api/visit', async(req, res) => {
 //Route to get website visits
 app.get('/api/visit', async (req, res) => {
     try{
-        const visitDoc = await Visit.findOne(); //Fetch the visit document
-        res.status(200).json({ count: visitDoc?.count || 0}); //Send the visit count
+        const { data, error } = await supabase
+            .from('visits')
+            .select('count')
+            .limit(1)
+            .single();
+
+        if (error && error.code !== 'PGRST116') throw error;
+
+        res.status(200).json({ count: data?.count || 0 }); //Send the visit count
     }
     catch (err) {
         console.error("Fetch visits failed:", err);
@@ -215,8 +216,12 @@ app.post('/api/review', async (req, res) => {
     }
 
     try{
-        const newReview = new Review ({ name, review }); //Create a new review document
-        await newReview.save(); //Save the review to the database
+        const { data, error } = await supabase
+            .from('reviews')
+            .insert([{ name, review }]);
+
+        if (error) throw error;
+
         res.status(200).json({ message: 'Review saved successfully!' });
     }
     catch(err){
@@ -228,8 +233,13 @@ app.post('/api/review', async (req, res) => {
 //Route to fetch reviews
 app.get('/api/reviews', async (req, res) => {
     try{
-        const reviews = await Review.find(); //Fetch all reviews from the database
-        res.status(200).json(reviews); //Send reviews as JSON response
+        const { data, error } = await supabase
+            .from('reviews')
+            .select('*');
+
+        if (error) throw error;
+
+        res.status(200).json(data); //Send reviews as JSON response
     }
     catch(err){
         console.error('Failed to load reviews');
@@ -240,8 +250,14 @@ app.get('/api/reviews', async (req, res) => {
 //Route to get featured reviews only
 app.get('/api/reviews/featured', async (req, res) => {
   try {
-    const featuredReviews = await Review.find({ featured: true }); //Fetch only featured reviews
-    res.status(200).json(featuredReviews); //Send featured reviews as JSON response
+    const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('featured', true);
+
+    if (error) throw error;
+
+    res.status(200).json(data); //Send featured reviews as JSON response
   } catch (err) {
     console.error('Error fetching featured reviews:', err);
     res.status(500).json({ message: 'Failed to retrieve featured reviews' });
@@ -251,12 +267,16 @@ app.get('/api/reviews/featured', async (req, res) => {
 //Route to mark a review as featured (for homepage)
 app.put('/api/reviews/:id/feature', async (req, res) => {
     try {
-        const review = await Review.findByIdAndUpdate(
-            req.params.id, //Find review by ID
-            { featured: true }, //Update featured status to true
-            { new: true } //Return the updated document
-        ); 
-        res.status(200).json(review); //Send the updated review
+        const { data, error } = await supabase
+            .from('reviews')
+            .update({ featured: true })
+            .eq('id', req.params.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        res.status(200).json(data); //Send the updated review
     } 
     catch (err) {
         console.error('Failed to feature review:', err);
@@ -267,8 +287,16 @@ app.put('/api/reviews/:id/feature', async (req, res) => {
 //Route to delete a review
 app.delete('/api/review/:id', async (req, res) => {
     try{
-        const deleted = await Review.findByIdAndDelete(req.params.id);  //Delete review by ID
-        if(!deleted) {
+        const { data, error } = await supabase
+            .from('reviews')
+            .delete()
+            .eq('id', req.params.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        if(!data) {
             return res.status(404).json({ message: 'Review not found.' });
         }
         res.status(200).json({ message: 'Review deleted successfuly.', id: req.params.id });
@@ -281,5 +309,5 @@ app.delete('/api/review/:id', async (req, res) => {
 
 //Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:5000`);
 });

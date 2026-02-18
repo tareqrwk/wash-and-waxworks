@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { format } from 'date-fns';
-import '../admin-bg.css'; 
+import '../admin-bg.css';
 
 function AdminDashboard() {
   //State to store bookings data
@@ -37,9 +37,9 @@ function AdminDashboard() {
 
   //Track website visits and fetch visit count
   useEffect(() => {
-    if(!localStorage.getItem("visitedWashWax")){
+    if (!localStorage.getItem("visitedWashWax")) {
       //If the user hasn't visited before, track the visit
-      fetch(`${process.env.REACT_APP_API_URL}/api/visit`, { method: "POST"})
+      fetch(`${process.env.REACT_APP_API_URL}/api/visit`, { method: "POST" })
         .then(res => res.json())
         .then(() => {
           localStorage.setItem("visitedWashWax", "true"); //Mark as visited
@@ -50,7 +50,7 @@ function AdminDashboard() {
         })
         .catch(err => console.error("Failed to track visit", err));
     }
-    else{
+    else {
       //Fetch visit count if already visited
       fetch(`${process.env.REACT_APP_API_URL}/api/visit`)
         .then(res => res.json())
@@ -174,53 +174,53 @@ function AdminDashboard() {
       <div className="mt-10">
         <h2 className="text-2xl font-bold mb-4 text-purple-400 text-center">Submitted Reviews</h2>
         <ul className="space-y-3">
-        {reviews.map((r, i) => (
-          <li key={i} className="bg-zinc-800 p-4 rounded-lg shadow">
-            <p><strong>{r.name}:</strong> {r.review}</p>
-            <div className="flex flex-wrap items-center gap-3 mt-3">
-              {/*Feature Button */}
-              {!r.featured ? (
-                <button
-                  className="mt-2 bg-purple-700 hover:bg-purple-900 px-4 py-1 rounded-md text-sm transition"
-                  onClick={() => {
-                    fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${r._id}/feature`, {
-                      method: 'PUT',
-                    })
-                      .then(res => res.json())
-                      .then((updated) => {
-                        setReviews(prev =>
-                          prev.map(rv => rv._id === updated._id ? updated : rv)
-                        );
+          {reviews.map((r, i) => (
+            <li key={i} className="bg-zinc-800 p-4 rounded-lg shadow">
+              <p><strong>{r.name}:</strong> {r.review}</p>
+              <div className="flex flex-wrap items-center gap-3 mt-3">
+                {/*Feature Button */}
+                {!r.featured ? (
+                  <button
+                    className="mt-2 bg-purple-700 hover:bg-purple-900 px-4 py-1 rounded-md text-sm transition"
+                    onClick={() => {
+                      fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${r.id}/feature`, {
+                        method: 'PUT',
                       })
-                      .catch(() => alert("Failed to feature review"));
+                        .then(res => res.json())
+                        .then((updated) => {
+                          setReviews(prev =>
+                            prev.map(rv => rv.id === updated.id ? updated : rv)
+                          );
+                        })
+                        .catch(() => alert("Failed to feature review"));
+                    }}
+                  >
+                    ➕ Add to Homepage
+                  </button>
+                ) : (
+                  <p className="text-green-400 mt-2 text-sm">✅ Featured</p>
+                )}
+                {/* Delete Button */}
+                <button
+                  className="mt-2 bg-red-600 hover:bg-red-800 px-4 py-1 rounded-md text-sm transition"
+                  onClick={() => {
+                    if (window.confirm('Are you sure you want to delete this review?')) {
+                      fetch(`${process.env.REACT_APP_API_URL}/api/review/${r.id}`, {
+                        method: 'DELETE',
+                      })
+                        .then(res => res.json())
+                        .then(() => {
+                          setReviews(prev => prev.filter(rv => rv.id !== r.id));
+                        })
+                        .catch(() => alert('Failed to delete review'));
+                    }
                   }}
                 >
-                  ➕ Add to Homepage
+                  🗑️ Delete
                 </button>
-              ) : (
-                <p className="text-green-400 mt-2 text-sm">✅ Featured</p>
-              )}
-              {/* Delete Button */}
-              <button 
-                className="mt-2 bg-red-600 hover:bg-red-800 px-4 py-1 rounded-md text-sm transition"
-                onClick={() => {
-                  if(window.confirm('Are you sure you want to delete this review?')){
-                    fetch(`${process.env.REACT_APP_API_URL}/api/review/${r._id}`, {
-                      method: 'DELETE',
-                    })
-                      .then(res => res.json())
-                      .then(() => {
-                        setReviews(prev => prev.filter(rv => rv._id !== r._id));
-                      })
-                      .catch(() => alert('Failed to delete review'));
-                  }
-                }}
-              >
-                🗑️ Delete
-              </button>
-            </div>
-          </li>
-        ))}
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </section>

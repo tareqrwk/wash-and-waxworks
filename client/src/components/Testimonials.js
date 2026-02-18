@@ -61,7 +61,7 @@ function Testimonials() {
         {/* Dynamically fetched featured reviews */}
         {featuredReviews.map((r, i) => (
           <TestimonialCard
-            key={r._id} //Unique key from the API data
+            key={r.id} //Unique key from the API data
             name={r.name} //Client's name from the API
             quote={r.review} //Client's review from the API
             image={`https://ui-avatars.com/api/?name=${encodeURIComponent(
