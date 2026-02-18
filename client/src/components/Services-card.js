@@ -1,8 +1,9 @@
-import {useRef, useState} from "react";
+// No imports needed for this component as it only uses pure JSX and props
+
 
 //Functional component to render a service card
-function ServicesCard({title, description, image}){
-    return(
+function ServicesCard({ title, description, image }) {
+    return (
         // Animation on scroll attribute for zoom-in effect
         <div data-aos="zoom-in">
             {/* Card container with hover effect and styling */}
