@@ -226,12 +226,12 @@ function BookingPage() {
                                     <Sparkles className="text-purple-500" />
                                     Choose Your Package
                                 </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="flex md:grid md:grid-cols-2 gap-4 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory pb-4 scrollbar-hide -mx-2 px-2">
                                     {SERVICES.map((service) => (
                                         <div
                                             key={service.id}
                                             onClick={() => setFormData({ ...formData, service: service.name })}
-                                            className={`group relative p-6 rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden ${formData.service === service.name
+                                            className={`group relative p-6 rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden min-w-[85%] md:min-w-0 snap-center ${formData.service === service.name
                                                 ? 'bg-purple-600/20 border-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.2)]'
                                                 : 'bg-zinc-900/40 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/40'
                                                 }`}
