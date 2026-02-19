@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Instagram, Facebook, ShieldCheck } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, ShieldCheck } from 'lucide-react';
 
 function Footer() {
     return (
@@ -20,11 +20,8 @@ function Footer() {
                             London's premier mobile detailing service. Bringing showroom-quality restoration directly to your doorstep with meticulous precision.
                         </p>
                         <div className="flex gap-4">
-                            <a href="#" className="p-2 rounded-lg bg-zinc-900 hover:bg-purple-600 transition-colors">
+                            <a href="https://www.instagram.com/washthenwaxworks/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-zinc-900 hover:bg-purple-600 transition-colors">
                                 <Instagram className="w-5 h-5 text-white" />
-                            </a>
-                            <a href="#" className="p-2 rounded-lg bg-zinc-900 hover:bg-purple-600 transition-colors">
-                                <Facebook className="w-5 h-5 text-white" />
                             </a>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import ServicesPageCard from "../components/ServicesPageCard";
 import { Link } from 'react-router-dom';
 import { useEffect } from "react";
-import { Sparkles, ShieldCheck, Zap, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Zap, ArrowRight } from 'lucide-react';
 
 function ServicesPage() {
     useEffect(() => {
