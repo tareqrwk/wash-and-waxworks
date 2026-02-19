@@ -12,42 +12,42 @@ const SERVICES = [
         name: "Standard Detail Package",
         description: "Essential care for your vehicle. Includes exterior wash and basic interior cleaning.",
         icon: <Wind className="w-6 h-6" />,
-        price: "$$$"
+        price: "$99.99"
     },
     {
         id: "Shiny Detail Package",
         name: "Shiny Detail Package",
         description: "Enhanced shine and protection. Adds waxing and deep conditioning.",
         icon: <Sparkles className="w-6 h-6" />,
-        price: "$$$"
+        price: "$149.99"
     },
     {
         id: "Platinum Detail Package",
         name: "Platinum Detail Package",
         description: "The ultimate showroom finish. Includes paint correction and ceramic protection.",
         icon: <ShieldCheck className="w-6 h-6" />,
-        price: "$$$"
+        price: "$199.99"
     },
     {
         id: "Standard Interior Detail",
         name: "Standard Interior Detail",
         description: "Thorough vacuuming, wiping, and window cleaning.",
         icon: <Layout className="w-6 h-6" />,
-        price: "$$"
+        price: "$74.99"
     },
     {
         id: "Full Interior Detail",
         name: "Full Interior Detail",
         description: "Deep steam cleaning, stain removal, and leather conditioning.",
         icon: <Zap className="w-6 h-6" />,
-        price: "$$$"
+        price: "$174.99"
     },
     {
         id: "Quick Wash",
         name: "Quick Wash",
         description: "Fast exterior refresh for when you're on the go.",
         icon: <Droplets className="w-6 h-6" />,
-        price: "$"
+        price: "$24.99"
     }
 ];
 
@@ -222,8 +222,8 @@ function BookingPage() {
                                             key={service.id}
                                             onClick={() => setFormData({ ...formData, service: service.name })}
                                             className={`group relative p-6 rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden ${formData.service === service.name
-                                                    ? 'bg-purple-600/20 border-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.2)]'
-                                                    : 'bg-zinc-900/40 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/40'
+                                                ? 'bg-purple-600/20 border-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.2)]'
+                                                : 'bg-zinc-900/40 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/40'
                                                 }`}
                                         >
                                             <div className="flex justify-between items-start mb-4">
