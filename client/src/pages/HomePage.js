@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Hero from '../components/Hero';
+import Process from '../components/Process';
 import Services from '../components/Services';
 import Testimonials from '../components/Testimonials';
 import BeforeAfterGallery from '../components/BeforeAfterGallery';
@@ -10,12 +11,15 @@ function HomePage() {
   }, []);
 
   return (
-    <>
+    <div className="bg-black">
       <Hero />
+      <Process />
       <Services />
       <Testimonials />
-      <BeforeAfterGallery />
-    </>
+      <div className="bg-zinc-950">
+        <BeforeAfterGallery />
+      </div>
+    </div>
   );
 }
 
