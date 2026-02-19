@@ -3,7 +3,7 @@ import { Sparkles, Calendar, ChevronRight, Star } from 'lucide-react';
 
 function Hero() {
   return (
-    <div className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center">
+    <div className="relative min-h-screen w-full overflow-hidden flex items-center pt-32 pb-20 md:pt-0 md:pb-0">
       {/* Video background */}
       <video
         className="absolute inset-0 w-full h-full object-cover z-0 scale-105"
@@ -20,7 +20,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent z-10"></div>
 
       {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 pt-32 md:pt-0 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="text-left animate-in fade-in slide-in-from-left-10 duration-1000">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-600/20 border border-purple-500/30 text-purple-400 font-bold text-sm uppercase tracking-widest mb-6 backdrop-blur-md">
             <Sparkles className="w-4 h-4" />
@@ -68,12 +68,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center p-1">
-          <div className="w-1 h-3 bg-purple-500 rounded-full"></div>
-        </div>
-      </div>
     </div>
   );
 }
