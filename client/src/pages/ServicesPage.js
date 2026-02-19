@@ -52,7 +52,7 @@ function ServicesPage() {
                                 data-aos-delay="100"
                                 title="Standard"
                                 price="$99.99"
-                                description={`Exterior Detailed Wash\nComplete Interior Vacuum\nInterior Windows Polished\nDust Dash & Console\nAir Vents & Cup Holders\nPremium Air Refreshener\nLeather/Upholstery Care`}
+                                description={"Exterior Detail\nVacuum Interior\nClean Interior Windows\nDust Dash & Carpet\nAir Vents & Cup Holders\nAir Refreshener\nLeather Cleaning\nOr\nUpholstery Cleaning"}
                                 button={bookButton("Standard Detail Package")}
                             />
 
@@ -62,7 +62,7 @@ function ServicesPage() {
                                 recommended={true}
                                 title="Shiny"
                                 price="$149.99"
-                                description={`All Standard Features\nSalt & Stain Removal\nTrunk Thorough Clean\nTire & Wheel Shine\nEngine Bay Dusting\nDeep Upholstery Steam\nExhaust Tip Polish`}
+                                description={"Exterior Detail\nVacuum Interior\nClean Interior Windows\nDust Dash & Carpet\nSalt Removing\nTrunk Cleaning\nAir Vents & Cup Holders\nAir Refreshener\nTire Shine\nLeather Cleaning\nOr\nUpholstery Cleaning"}
                                 button={bookButton("Shiny Detail Package")}
                             />
 
@@ -71,7 +71,7 @@ function ServicesPage() {
                                 data-aos-delay="300"
                                 title="Platinum"
                                 price="$199.99"
-                                description={`All Shiny Features\nExclusive Boutique Shampoo\nFull Door Jambs Detailing\nGas Cap Inner Cleaning\nSilk Shine Trim Protection\nPlastic UV Restorer\nPremium Wax Finish`}
+                                description={"Exterior Detail (Exclusive Car Shampoo)\nVacuum Interior\nClean Interior Windows\nDust Dash & Carpet\nSalt Removing\nTrunk Cleaning\nAir Vents & Cup Holders\nDoor Jambs\nGas Cap Cleaning\nAir Refreshener\nTire Shine\nInterior Silk Shine Protectant\nLeather Cleaning\nOr\nUpholstery Cleaning"}
                                 button={bookButton("Platinum Detail Package")}
                             />
                         </div>
@@ -90,7 +90,7 @@ function ServicesPage() {
                                 data-aos-delay="100"
                                 title="Full Interior"
                                 price="$174.99"
-                                description={`Deep Steam Extraction\nLeather Deep Clean\nConditioning Treatment\nDashboard Silk Coating\nOdor Neutralization\nPet Hair Removal\nFull Sanitization`}
+                                description={"Exterior Detail (Exclusive Car Shampoo)\nVacuum Interior\nClean Interior Windows\nDust Dash & Carpet\nSalt Removing\nAir Vents & Cup Holders\nDoor Jambs\nAir Refreshener\nTire Shine\nInterior Silk Shine Protectant\nLeather Cleaning\nLeather Quick Detailer\nLeather Conditioning\nOr\nUpholstery Cleaning"}
                                 button={bookButton("Full Interior Detail")}
                             />
 
@@ -99,7 +99,7 @@ function ServicesPage() {
                                 data-aos-delay="200"
                                 title="Standard Interior"
                                 price="$74.99"
-                                description={`Full Cabin Vacuum\nDusting & Wipedown\nWindows Streak-Free\nFloor Mat Cleaning\nCenter Console Detail\nUpholstery Refresh`}
+                                description={"Vacuum Interior\nClean Interior Windows\nDust Dash & Carpet\nLeather Cleaning\nOr\nUpholstery Cleaning"}
                                 button={bookButton("Standard Interior Detail")}
                             />
 
@@ -108,7 +108,7 @@ function ServicesPage() {
                                 data-aos-delay="300"
                                 title="Quick Wash"
                                 price="$24.99"
-                                description={`Exterior Hand Wash\nTire Cleaning\nDoor Sills Wiped\nQuick Interior Vac\nWheel Face Detail`}
+                                description={"Hand Wash\nTire Cleaning\nQuick Interior Vacuum"}
                                 button={bookButton("Quick Wash")}
                             />
                         </div>
