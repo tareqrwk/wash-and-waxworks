@@ -12,42 +12,48 @@ const SERVICES = [
         name: "Standard Detail Package",
         description: "Essential care for your vehicle. Includes exterior wash and basic interior cleaning.",
         icon: <Wind className="w-6 h-6" />,
-        price: "$99.99"
+        price: "$99.99",
+        duration: "2-3 Hours"
     },
     {
         id: "Shiny Detail Package",
         name: "Shiny Detail Package",
         description: "Enhanced shine and protection. Adds waxing and deep conditioning.",
         icon: <Sparkles className="w-6 h-6" />,
-        price: "$149.99"
+        price: "$149.99",
+        duration: "3-4 Hours"
     },
     {
         id: "Platinum Detail Package",
         name: "Platinum Detail Package",
         description: "The ultimate showroom finish. Includes paint correction and ceramic protection.",
         icon: <ShieldCheck className="w-6 h-6" />,
-        price: "$199.99"
+        price: "$199.99",
+        duration: "5-7 Hours"
     },
     {
         id: "Standard Interior Detail",
         name: "Standard Interior Detail",
         description: "Thorough vacuuming, wiping, and window cleaning.",
         icon: <Layout className="w-6 h-6" />,
-        price: "$74.99"
+        price: "$74.99",
+        duration: "1.5-2 Hours"
     },
     {
         id: "Full Interior Detail",
         name: "Full Interior Detail",
         description: "Deep steam cleaning, stain removal, and leather conditioning.",
         icon: <Zap className="w-6 h-6" />,
-        price: "$174.99"
+        price: "$174.99",
+        duration: "3-4 Hours"
     },
     {
         id: "Quick Wash",
         name: "Quick Wash",
         description: "Fast exterior refresh for when you're on the go.",
         icon: <Droplets className="w-6 h-6" />,
-        price: "$24.99"
+        price: "$24.99",
+        duration: "45-60 Mins"
     }
 ];
 
@@ -75,7 +81,6 @@ function BookingPage() {
     useEffect(() => {
         if (prefilledService) {
             setFormData((prev) => ({ ...prev, service: prefilledService }));
-            // If we have a prefilled service, we might want to start at step 2
             setCurrentStep(2);
         }
     }, [prefilledService]);
@@ -90,6 +95,10 @@ function BookingPage() {
         }
         if (currentStep === 2 && (!formData.date || !formData.time || !formData.car || !formData.location)) {
             alert("Please fill in all booking details.");
+            return;
+        }
+        if (currentStep === 3 && (!formData.name || !formData.email || !formData.phone)) {
+            alert("Please provide your contact information.");
             return;
         }
         setCurrentStep(prev => prev + 1);
@@ -200,11 +209,12 @@ function BookingPage() {
                     <div className="absolute top-5 left-0 w-full h-1 bg-gray-800 -z-0"></div>
                     <div
                         className="absolute top-5 left-0 h-1 bg-purple-600 transition-all duration-500 ease-in-out -z-0"
-                        style={{ width: `${(currentStep - 1) * 50}%` }}
+                        style={{ width: `${(currentStep - 1) * 33.33}%` }}
                     ></div>
                     {stepLabel(1, "Service")}
                     {stepLabel(2, "Details")}
                     {stepLabel(3, "Contact")}
+                    {stepLabel(4, "Review")}
                 </div>
 
                 {/* Form Steps Container */}
@@ -230,7 +240,13 @@ function BookingPage() {
                                                 <div className={`p-3 rounded-xl transition-all duration-300 ${formData.service === service.name ? 'bg-purple-600 text-white' : 'bg-zinc-800 text-gray-400 uppercase group-hover:bg-zinc-700 group-hover:text-purple-400'}`}>
                                                     {service.icon}
                                                 </div>
-                                                <span className="text-purple-400 font-bold">{service.price}</span>
+                                                <div className="text-right">
+                                                    <div className="text-purple-400 font-bold">{service.price}</div>
+                                                    <div className="text-[10px] text-gray-500 uppercase tracking-tighter flex items-center gap-1 mt-1">
+                                                        <Clock className="w-3 h-3" />
+                                                        {service.duration}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <h3 className="text-lg font-bold mb-2 transition-colors duration-300 group-hover:text-purple-400">{service.name}</h3>
                                             <p className="text-sm text-gray-500 leading-relaxed">{service.description}</p>
@@ -375,6 +391,81 @@ function BookingPage() {
                                 </div>
                             </div>
                         )}
+
+                        {currentStep === 4 && (
+                            <div className="animate-in fade-in slide-in-from-right-8 duration-500 space-y-8">
+                                <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                                    <Check className="text-purple-500" />
+                                    Review Your Appointment
+                                </h2>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-6">
+                                        <div className="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800 relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                                <Sparkles className="w-12 h-12" />
+                                            </div>
+                                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Service Selection</h3>
+                                            <div className="text-xl font-bold mb-1">{formData.service}</div>
+                                            <div className="text-purple-400 font-bold">{SERVICES.find(s => s.name === formData.service)?.price}</div>
+                                            <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
+                                                <Clock className="w-4 h-4" />
+                                                <span>Estimated time: {SERVICES.find(s => s.name === formData.service)?.duration}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800">
+                                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Timing & Location</h3>
+                                            <div className="space-y-3 font-medium">
+                                                <div className="flex items-center gap-3 text-gray-200">
+                                                    <Calendar className="w-4 h-4 text-purple-500" />
+                                                    {formData.date}
+                                                </div>
+                                                <div className="flex items-center gap-3 text-gray-200">
+                                                    <Clock className="w-4 h-4 text-purple-500" />
+                                                    {formData.time}
+                                                </div>
+                                                <div className="flex items-center gap-3 text-gray-200">
+                                                    <MapPin className="w-4 h-4 text-purple-500" />
+                                                    {formData.location}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        <div className="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800">
+                                            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Vehicle & Contact</h3>
+                                            <div className="space-y-4 font-medium">
+                                                <div className="flex items-center gap-3">
+                                                    <Car className="w-4 h-4 text-purple-500" />
+                                                    <span className="text-gray-400 px-2 py-0.5 bg-zinc-900 rounded-md text-sm">{formData.car}</span>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <User className="w-4 h-4 text-purple-500" />
+                                                    {formData.name}
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <Mail className="w-4 h-4 text-purple-500" />
+                                                    {formData.email}
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <Phone className="w-4 h-4 text-purple-500" />
+                                                    {formData.phone}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {formData.notes && (
+                                            <div className="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800">
+                                                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Special Instructions</h3>
+                                                <p className="text-gray-400 text-sm italic italic leading-relaxed">"{formData.notes}"</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* Navigation Bar */}
@@ -389,7 +480,7 @@ function BookingPage() {
                             </button>
                         ) : <div></div>}
 
-                        {currentStep < 3 ? (
+                        {currentStep < 4 ? (
                             <button
                                 onClick={nextStep}
                                 className="bg-purple-600 hover:bg-purple-500 text-white font-bold px-10 py-3 rounded-xl transition-all duration-300 flex items-center gap-2 shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.5)]"
@@ -401,17 +492,17 @@ function BookingPage() {
                             <button
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
-                                className={`bg-white text-black font-extrabold px-12 py-3 rounded-xl transition-all duration-300 flex items-center gap-2 hover:scale-105 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-extrabold px-12 py-3 rounded-xl transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
-                                {isSubmitting ? 'Booking...' : 'Complete Booking'}
-                                <Check className="w-5 h-5" />
+                                {isSubmitting ? 'Booking...' : 'Confirm Appointment'}
+                                <ShieldCheck className="w-5 h-5" />
                             </button>
                         )}
                     </div>
                 </div>
 
-                {/* Summary Info */}
-                {formData.service && (
+                {/* Summary Info (Steps 1-3 only) */}
+                {formData.service && currentStep < 4 && (
                     <div className="mt-8 flex justify-center animate-in fade-in duration-700">
                         <div className="inline-flex items-center gap-6 px-8 py-3 bg-zinc-900/30 border border-zinc-800 rounded-full text-sm">
                             <div className="flex items-center gap-2 text-gray-400">
