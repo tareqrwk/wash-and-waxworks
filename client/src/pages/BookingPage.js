@@ -501,6 +501,11 @@ function BookingPage() {
                     </div>
                 </div>
 
+                {/* Duration Disclaimer */}
+                <p className="mt-6 text-center text-sm text-gray-500 italic max-w-2xl mx-auto px-4">
+                    * Please note: Service completion times are estimates and may vary depending on the vehicle's size and condition.
+                </p>
+
                 {/* Summary Info (Steps 1-3 only) */}
                 {formData.service && currentStep < 4 && (
                     <div className="mt-8 flex justify-center animate-in fade-in duration-700">
