@@ -10,31 +10,31 @@ const SERVICES = [
     {
         id: "Standard Detail Package",
         name: "Standard Detail Package",
-        description: "Essential care for your vehicle. Includes exterior wash and basic interior cleaning.",
+        description: "Complete exterior wash and interior cleaning with leather or upholstery care.",
         icon: <Wind className="w-6 h-6" />,
         price: "$99.99",
-        duration: "2-3 Hours"
+        duration: "1-2 Hours"
     },
     {
         id: "Shiny Detail Package",
         name: "Shiny Detail Package",
-        description: "Enhanced shine and protection. Adds waxing and deep conditioning.",
+        description: "Enhanced exterior detail with salt removal, trunk cleaning, and tire shine.",
         icon: <Sparkles className="w-6 h-6" />,
         price: "$149.99",
-        duration: "3-4 Hours"
+        duration: "2-3 Hours"
     },
     {
         id: "Platinum Detail Package",
         name: "Platinum Detail Package",
-        description: "The ultimate showroom finish. Includes paint correction and ceramic protection.",
+        description: "The ultimate detail including exclusive shampoo, trunk cleaning, and silk protectant.",
         icon: <ShieldCheck className="w-6 h-6" />,
         price: "$199.99",
-        duration: "5-7 Hours"
+        duration: "2-3 Hours"
     },
     {
         id: "Standard Interior Detail",
         name: "Standard Interior Detail",
-        description: "Thorough vacuuming, wiping, and window cleaning.",
+        description: "Thorough interior vacuum, window cleaning, and deep seat cleaning.",
         icon: <Layout className="w-6 h-6" />,
         price: "$74.99",
         duration: "1.5-2 Hours"
@@ -42,15 +42,15 @@ const SERVICES = [
     {
         id: "Full Interior Detail",
         name: "Full Interior Detail",
-        description: "Deep steam cleaning, stain removal, and leather conditioning.",
+        description: "Premium interior restoration with detailed cleaning/protection and leather conditioning.",
         icon: <Zap className="w-6 h-6" />,
         price: "$174.99",
-        duration: "3-4 Hours"
+        duration: "2-3 Hours"
     },
     {
         id: "Quick Wash",
         name: "Quick Wash",
-        description: "Fast exterior refresh for when you're on the go.",
+        description: "Fast hand wash and tire cleaning with a quick interior vacuum.",
         icon: <Droplets className="w-6 h-6" />,
         price: "$24.99",
         duration: "45-60 Mins"
