@@ -38,8 +38,8 @@ function Navbar() {
         <>
             <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'py-3' : 'py-5'}`}>
                 <nav className={`mx-auto max-w-7xl px-6 transition-all duration-500 border ${scrolled
-                        ? 'bg-black/70 backdrop-blur-xl border-zinc-800 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
-                        : 'bg-transparent border-transparent'
+                    ? 'bg-black/70 backdrop-blur-xl border-zinc-800 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+                    : 'bg-black/20 md:bg-transparent border-transparent'
                     } rounded-full`}>
                     <div className="flex justify-between items-center h-16 relative z-[110]">
                         {/* Logo Section */}
@@ -122,8 +122,8 @@ function Navbar() {
                                 to={path}
                                 onClick={() => setMenuOpen(false)}
                                 className={`flex items-center justify-between p-5 rounded-[2rem] border transition-all duration-500 ${isActive(path)
-                                        ? 'bg-purple-600/20 border-purple-500/50 text-white shadow-[0_0_20px_rgba(168,85,247,0.15)]'
-                                        : 'bg-white/5 border-white/5 text-zinc-400'
+                                    ? 'bg-purple-600/20 border-purple-500/50 text-white shadow-[0_0_20px_rgba(168,85,247,0.15)]'
+                                    : 'bg-white/5 border-white/5 text-zinc-400'
                                     }`}
                                 style={{
                                     transitionDelay: `${index * 50}ms`,
